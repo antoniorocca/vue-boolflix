@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" 
+      crossorigin="anonymous"/>
+     <title>Boolflix</title>
+     <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+     <div id="app">
+         <nav class="d-flex">
+             <div id="logo">
+                 <span id="title">BOOLFLIX</span>
+             </div>
+             <div id="search-space" class="d-flex">
+                 <input type="text" placeholder="Search movies and TV series" v-model="searchText" @keyup.enter="search">
+             </div>
+         </nav>
+         <main>
+             <div id="films-container" class="d-flex">
+                 <div class="film" v-for="movie in movies">
+                     <div class="cover">
+                         <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`">
+                         <img v-else src="https://cdn8.openculture.com/wp-content/uploads/2011/02/free-movies-online.jpg">
+                     </div>
+                     <div class="description">
+                         <p class="normal"><strong>Title: </strong>{{movie.title}}</p>
+                         <p class="normal"><strong>Original title: </strong>{{movie.original_title}}</p>
+                         <div class="normal" v-if="languages.includes(movie.original_language)">
+                             <span><strong>Language: </strong><img class="flag" :src="showFlag(movie.original_language)"></span>   
+                         </div>  
+                         <p v-else class="normal"><strong>Language: </strong>{{movie.original_language}}</p>
+                         <div id="vote-section">
+                             <i v-for="stars in roundVote(movie.vote_average)" class="fas fa-star"></i>
+                             <i v-for="stars in (5 - roundVote(movie.vote_average))" class="far fa-star"></i>
+                         </div>
+                         <p class="normal"><strong>Overview: </strong></p><p class="overview" v-if="movie.overview">{{movie.overview}}</p>
+                     </div>
+                 </div>
+             </div>    
+             <div id="tvseries-container" class="d-flex">
+                 <div class="film" v-for="serie in tvSeries">
+                     <div class="cover">
+                         <img v-if="serie.poster_path" :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`">
+                         <img v-else src="https://cdn8.openculture.com/wp-content/uploads/2011/02/free-movies-online.jpg">
+                     </div>
+                     <div class="description">
+                         <p class="normal"><strong>Title: </strong>{{serie.name}}</p>
+                         <p class="normal"><strong>Original title: </strong>{{serie.original_name}}</p>
+                         <div class="normal" v-if="languages.includes(serie.original_language)">
+                             <span><strong>Language: </strong><img class="flag" :src="showFlag(serie.original_language)"></span>   
+                         </div>
+                         <p v-else class="normal"><strong>Language: </strong>{{serie.original_language}}</p>
+                         <div id="vote-section">
+                             <i v-for="stars in roundVote(serie.vote_average)" class="fas fa-star"></i>
+                             <i v-for="stars in (5 - roundVote(serie.vote_average))" class="far fa-star"></i>
+                         </div>
+                         <p class="normal"><strong>Overview: </strong></p><p class="overview" v-if="serie.overview">{{serie.overview}}</p>
+                     </div>
+                 </div>
+             </div>     
+         </main>                
+     </div>
+     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script src="main.js"></script>
+ </body>
+</html>
