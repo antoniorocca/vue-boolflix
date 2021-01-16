@@ -34,16 +34,12 @@ input {
     height: 30px;
     margin-right: 10px;
 }
-button {
-    width: 60px;
-    height: 30px;
-}
 main {
    height: calc(100%-90px);
    width: 100vw;
    height: 100%;
    background-color: grey;
-   position: relative;  
+   position: relative;
 }
 #films-container, #tvseries-container {
     width: 100vw;
